@@ -1,0 +1,57 @@
+/* ----------------------------------------------------------------- */
+/* Form Auth */
+/* ----------------------------------------------------------------- */
+.section-form__auth {
+    min-height: 100vh;
+}
+
+.form-auth {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 475px;
+}
+
+.form__header, .form__logo, .form__title, .form__btn {
+    margin-bottom: 20px;
+}
+
+.form__logo a {
+    display: inline-block;
+}
+
+.form__body {
+    margin-bottom: 30px;
+}
+
+.form__row + .form__row {
+    margin-top: 20px;
+}
+
+.form__field, .form__actions {
+    padding: 0 15px;
+}
+
+.form__field .field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(122, 122, 122);
+    font-size: 16px;
+}
+
+.form__field .field:focus {
+    outline: none;
+}
+
+.form__actions a {
+    text-decoration: underline;
+    color: rgb(131, 131, 131);
+    transition: .2s;
+}
+
+.form__actions a:hover {
+    color: #000;
+    transition: .2s;
+}
