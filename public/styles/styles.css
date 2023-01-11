@@ -1,5 +1,7 @@
 @import "header.css";
 @import "form-search.css";
+@import "hero.css";
+@import "form-auth.css";
 
 /* ----------------------------------------------------------------- */
 /* Reset */
@@ -19,6 +21,7 @@ body {
     font-weight: 400;
     color: #161616;
     font-size: 18px;
+    min-height: 100vh;
 }
 
 ul {
@@ -28,6 +31,14 @@ ul {
 a {
     text-decoration: none;
     color: #161616;
+}
+
+img {
+    display: block;
+}
+
+h1 {
+    font-size: 70px;
 }
 
 /* ----------------------------------------------------------------- */
@@ -45,6 +56,20 @@ a {
     border-radius: 30px;
 }
 
+.btn--auth {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+}
+
+.btn--auth:hover {
+    background-color: rgb(64, 64, 64);
+    transition: .2s;
+}
+
 /* ----------------------------------------------------------------- */
 /* Nav */
 /* ----------------------------------------------------------------- */
@@ -54,4 +79,14 @@ a {
 
 .nav ul li + li {
     margin-left: 15px;
+}
+
+/* ----------------------------------------------------------------- */
+/* Shell */
+/* ----------------------------------------------------------------- */
+.shell {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
 }
