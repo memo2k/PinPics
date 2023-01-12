@@ -1,11 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { UserAuth } from '../context/AuthContext';
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { login } = UserAuth();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        try {
+            await login(email, password);
+            navigate('/');
+        } catch (err) {
+            setError(err.message);
+            console.log(err.message);
+        }
+    }
+
   return (
     <section className="section-form__auth">
-        <form action="" className="form-auth">
+        <form onSubmit={handleSubmit} className="form-auth">
             <div className="form__header">
                 <div className="form__logo">
                     <Link to="/">
@@ -23,20 +43,20 @@ const Login = () => {
             <div className="form__body">
                 <div className="form__row">
                     <div className="form__field">
-                        <input type="email" id="email" className="field" placeholder="Email" />
+                        <input onChange={(e) => setEmail(e.target.value)} type="email" id="email" className="field" placeholder="Email" />
                     </div>
                 </div>
 
                 <div className="form__row">
                     <div className="form__field">
-                        <input type="password" id="password" className="field" placeholder="Password" />
+                        <input onChange={(e) => setPassword(e.target.value)} type="password" id="password" className="field" placeholder="Password" />
                     </div>
                 </div>
             </div>
 
             <div className="form__actions">
                 <div className="form__btn">
-                    <button type="submit" className="btn btn--auth">Login</button>
+                    <button className="btn btn--auth">Login</button>
                 </div>
 
                 <p>Don't have an acccount? <Link to="/register">Register</Link></p>
