@@ -4,15 +4,16 @@
 .hero {
     background-image: linear-gradient(rgba(0, 0, 0, 0.3),
     rgba(0, 0, 0, 0.3));
-    height: 700px;
+    height: 500px;
     background-size: cover;
     background-repeat: no-repeat;
     color: rgb(240, 240, 240);
     font-size: 30px;
+    margin-bottom: 60px;
 }
 
 .hero__inner {
-    padding-top: 200px;
+    padding-top: 150px;
 }
 
 .hero__title {

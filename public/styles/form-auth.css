@@ -8,16 +8,16 @@
     justify-content: center;
 }
 
-.form-auth {
+.section-form__auth .form-auth {
     text-align: center;
     width: 475px;
 }
 
-.form__header, .form__logo, .form__title, .form__btn {
+.section-form__auth .form__header, .form__logo, .form__title, .form__btn {
     margin-bottom: 20px;
 }
 
-.form__logo a {
+.section-form__auth .form__logo a {
     display: inline-block;
 }
 
@@ -33,24 +33,24 @@
     padding: 0 15px;
 }
 
-.form__field .field {
+.section-form__auth .form__field .field {
     width: 100%;
     padding: 10px;
     border: 1px solid rgb(122, 122, 122);
     font-size: 16px;
 }
 
-.form__field .field:focus {
+.section-form__auth .form__field .field:focus {
     outline: none;
 }
 
-.form__actions a {
+.section-form__auth .form__actions a {
     text-decoration: underline;
     color: rgb(131, 131, 131);
     transition: .2s;
 }
 
-.form__actions a:hover {
+.section-form__auth .form__actions a:hover {
     color: #000;
     transition: .2s;
 }

@@ -2,6 +2,9 @@
 @import "form-search.css";
 @import "hero.css";
 @import "form-auth.css";
+@import "form-post.css";
+@import "posts.css";
+@import "post-details.css";
 
 /* ----------------------------------------------------------------- */
 /* Reset */
@@ -41,6 +44,10 @@ h1 {
     font-size: 70px;
 }
 
+h2 {
+    font-size: 40px;
+}
+
 /* ----------------------------------------------------------------- */
 /* Buttons */
 /* ----------------------------------------------------------------- */
@@ -67,7 +74,53 @@ h1 {
 
 .btn--auth:hover {
     background-color: rgb(64, 64, 64);
-    transition: .2s;
+}
+
+.btn--upload {
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.btn--upload:hover {
+    background-color: rgb(64, 64, 64);
+}
+
+.btn--browse {
+    width: 120px;
+    height: 45px;
+    font-size: 16px;
+    border: none;
+    background-color: #144c4c;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.btn--browse:hover {
+    background-color: #3d6969;
+}
+
+.btn--remove {
+    background-color: transparent;
+    color: #000;
+    border: none;
+}
+
+.btn--like {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #b2b2b2;
+    background-color: #fff;
+}
+
+.btn--like:hover {
+    opacity: .9;
+    border: 1px solid #636363;
 }
 
 /* ----------------------------------------------------------------- */
@@ -89,4 +142,102 @@ h1 {
     width: 100%;
     margin: 0 auto;
     padding: 0 15px;
+}
+
+.shell--smaller {
+    max-width: 1000px;
+}
+
+/* ----------------------------------------------------------------- */
+/* Masonry Grid */
+/* ----------------------------------------------------------------- */
+.my-masonry-grid {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -30px; /* gutter size offset */
+    width: auto;
+}
+
+.my-masonry-grid_column {
+    padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
+}
+  
+  /* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+    margin-bottom: 30px;
+}
+
+/* ----------------------------------------------------------------- */
+/* Tooltip */
+/* ----------------------------------------------------------------- */
+.tooltip {
+    position: relative;
+}
+
+.tooltip__text {
+    position: absolute;
+    left: -200%;
+    top: -52%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, .8);
+    color: #fff;
+    padding: 6px;
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s;
+    padding: 10px;
+}
+
+.tooltip__text::before {
+    content: "";
+    position: absolute;
+    left: 99%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 8px solid;
+    border-color: #0000 #0000 #0000 #000;
+    opacity: .8;
+}
+
+.tooltip:hover .tooltip__text {
+    left: -200%;
+    visibility: visible;
+    opacity: 1;
+    transition: .5s;
+}
+
+/* ----------------------------------------------------------------- */
+/* Author */
+/* ----------------------------------------------------------------- */
+.author {
+    display: flex;
+    align-items: center;
+}
+
+.author__name-white, .author__name-black {
+    margin-left: 10px;
+}
+
+.author__name-white a {
+    color: #fff;
+}
+
+.author__name-black a {
+    color: #000;
+}
+
+.author__image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+[aria-current="page"] {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
 }
