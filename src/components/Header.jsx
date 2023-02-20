@@ -35,11 +35,8 @@ const Header = () => {
 
                 <div className="header__nav">
                     <nav className="nav">
+                        {!user ? (
                         <ul>
-                            <li>
-                                <Link to="/profile">Profile</Link>
-                            </li>
-
                             <li>
                                 <Link to="/login">Login</Link>
                             </li>
@@ -47,11 +44,25 @@ const Header = () => {
                             <li>
                                 <Link to="/register">Register</Link>
                             </li>
-
-                            <li>
-                                <button onClick={handleLogout} to="/logout">Logout</button>
-                            </li>
                         </ul>
+                        ) : (
+                            <ul>
+                                <li>
+                                    <Link to="/profile">Profile</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/create">Upload</Link>
+                                </li>
+
+                                <li>
+                                    <div className="tooltip">
+                                        <Link onClick={handleLogout} to="/logout"><i className="fa-solid fa-arrow-right-from-bracket fa-lg"></i></Link>
+                                        <div className="tooltip__text">Logout</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        )}
                     </nav>
                 </div>
             </div>
