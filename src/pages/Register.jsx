@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import logo from '../assets/logo.png';
 import { db } from "../firebase";
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
 
 const Register = () => {
@@ -25,13 +25,13 @@ const Register = () => {
             // Updates user's display name
             await updateProfile(res.user, {
                 displayName: username,
-                photoURL: "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+                photoURL: "https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png"
             });
             
             // Stores the user details(username and email) in the database
-            await addDoc(collection(db, 'users'), {
+            await setDoc(doc(db, 'users', res.user.uid), {
                 name: username,
-                profilePicture: "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg",
+                profilePicture: "https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png",
                 email: email
             });
 
@@ -58,7 +58,7 @@ const Register = () => {
                 </div>
 
                 <div className="form__body">
-                <div className="form__row">
+                    <div className="form__row">
                         <div className="form__field">
                             <input onChange={(e) => setUsername(e.target.value)} type="text" className="field" placeholder="Username" />
                         </div>
