@@ -1,28 +1,42 @@
-import { collection, getDoc, doc } from 'firebase/firestore';
-import React, { useEffect, useReducer, useState } from 'react';
+import { getDoc, doc, deleteDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
 import { UserAuth } from '../context/AuthContext';
 import Header from './Header';
 import Post from './Post';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LikePost from './LikePost';
 
 const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState({});
+  const [likes, setLikes] = useState(0);
   const { user } = UserAuth();
-  const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
+  const navigate = useNavigate();
 
+  const docData = doc(db, "posts", postId);
+  
   useEffect(() => {
     const getPost = async () => {
-      const data = await getDoc(doc(db, "posts", postId));
-      setPost({ ...data.data(), likesCount: data.data().likes.length});
-    }
+      const docRef = await getDoc(docData);
+      setPost({ ...docRef.data() });
 
+      if (docRef.exists()) {
+        const likesLength = docRef.data().likes.length;
+        setLikes(likesLength);
+      }
+    }
+    
     getPost();
   });
+  
+  const handleDelete = async () => {
+    await deleteDoc(docData);
+    navigate('/');
+  }
 
+  
   return (  
     <>
       <Header />
@@ -33,36 +47,55 @@ const PostDetails = () => {
             <div className="post__info">
               <div className="author">
                 <div className="author__image">
-                  <Link to="/">
+                  <Link to={`/profile/${post.userId}`}>
                     <img src={post.authorPicture} alt="" />
                   </Link>
                 </div>
 
                 <div className="author__name-black">
-                  <Link to="/">{post.author}</Link>
+                  <Link to={`/profile/${post.userId}`}>{post.author}</Link>
                 </div>
               </div>
 
               <div className="post__actions">
-                <div className="post__actions-likes"></div>
-                {(post.likesCount === 1) ? (
-                  <div className="post__actions-likes">
-                    {post.likesCount} like
-                  </div>
-                ) : (
-                  <div className="post__actions-likes">
-                    {post.likesCount} likes
-                  </div>
-                )}
+                  {user && (
+                    (likes === 1) ? (
+                      <div className="post__actions-likes">
+                        <div>
+                          1 like
+                        </div>
 
-                {user && (
-                  <LikePost id={postId} likes={post.likes} />
+                        <LikePost id={postId} likes={post.likes} />
+                      </div>
+                    ) : (
+                      <div className="post__actions-likes">
+                        <div>
+                          {likes} likes
+                        </div>
+                        
+                        <LikePost id={postId} likes={post.likes} />
+                      </div>
+                    )
+                  )}
+
+                  {user && (
+                    (user.uid === post.userId) && (
+                      <div className="post__actions-delete">
+                        <button onClick={handleDelete} className='btn btn--delete'>Delete</button>
+                      </div>
+                    )
                   )}
               </div>
             </div>
 
             <div className="post__content">
-              <img src={post.imageUrl} alt="" />
+              <div className="post__title">
+                <h3>{post.title}</h3>
+              </div>
+
+              <div className="post__image">
+                <img src={post.imageUrl} alt="" />
+              </div>
             </div>
           </div>
         </div>
