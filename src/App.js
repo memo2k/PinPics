@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import EditProfile from './components/Profile/EditProfile';
 import { AuthContextProvider } from './context/AuthContext';
 
 const Login = lazy(() => import("./pages/Login"));
@@ -25,7 +26,8 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/profile/:userId" element={<Profile />} />
+              <Route path="/edit-profile/:userId" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
               <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
               <Route path="/details/:postId" element={<PostDetails />} />
             </Routes>
