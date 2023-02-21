@@ -22,12 +22,14 @@ const Create = () => {
 
         try {
             const imageRef = ref(storage, `images/${image.name + v4()}`);
+            const authorImageRef = ref(storage, `users/${user.uid}/profilePicture`);
             
             await uploadBytes(imageRef, image);
             await addDoc(collection(db, "posts"), {
                 title: title,
                 author: user.displayName,
-                authorPicture: user.photoURL,
+                userId: user.uid,
+                authorPicture: await getDownloadURL(authorImageRef),
                 likes: [],
                 imageUrl: await getDownloadURL(imageRef),
                 timeStamp: serverTimestamp()
