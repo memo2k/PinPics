@@ -48,7 +48,7 @@ const Header = () => {
                         ) : (
                             <ul>
                                 <li>
-                                    <Link to="/profile">Profile</Link>
+                                    <Link to={`/profile/${user.uid}`}>Profile</Link>
                                 </li>
 
                                 <li>
