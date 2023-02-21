@@ -4,6 +4,7 @@
 @import "form-auth.css";
 @import "form-post.css";
 @import "posts.css";
+@import "profile.css";
 @import "post-details.css";
 
 /* ----------------------------------------------------------------- */
@@ -22,7 +23,7 @@
 body {
     font-family: 'Source Sans 3', sans-serif;
     font-weight: 400;
-    color: #161616;
+    color: #252525;
     font-size: 18px;
     min-height: 100vh;
 }
@@ -118,9 +119,30 @@ h2 {
     background-color: #fff;
 }
 
-.btn--like:hover {
-    opacity: .9;
-    border: 1px solid #636363;
+.btn--delete {
+    border: 1px solid #b2b2b2;
+    background-color: #fff;
+    width: 65px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.btn--delete:hover, .btn--like:hover {
+    border: 1px solid #525252;
+}
+
+.btn--edit {
+    background-color: #144c4c;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.btn--edit:hover {
+    background-color: #3d6969;
 }
 
 /* ----------------------------------------------------------------- */

@@ -1,0 +1,31 @@
+/* ----------------------------------------------------------------- */
+/* Profile */
+/* ----------------------------------------------------------------- */
+.profile {
+    min-height: 100vh;
+}
+
+.profile .profile__inner {
+    margin: 80px 0;
+}
+
+.profile .profile__details {
+    text-align: center;
+}
+
+.profile .profile__picture {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+}
+
+.profile .profile__picture img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile .profile__username, .profile__edit {
+    margin-top: 40px;
+}
