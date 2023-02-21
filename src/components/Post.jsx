@@ -10,6 +10,7 @@ import LikePost from './LikePost';
 
 const Post = () => {
   const [postList, setPostList] = useState([]);
+  const [likes, setLikes] = useState(0);
   const { user } = UserAuth();
 
   useEffect(() => {
@@ -46,13 +47,13 @@ const Post = () => {
           <div className="post__details">
             <div className="author">
               <div className="author__image">
-                <Link to="/">
+                <Link to={`/profile/${post.userId}`}>
                   <img src={post.authorPicture} alt="pfp" />
                 </Link>
               </div>
 
               <div className="author__name-white">
-                <Link to="/">{post.author}</Link>
+                <Link to={`/profile/${post.userId}`}>{post.author}</Link>
               </div>
             </div>
 
