@@ -1,6 +1,66 @@
 /* ----------------------------------------------------------------- */
 /* Form Edit */
 /* ----------------------------------------------------------------- */
+.edit-profile {
+    padding-top: 100px;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
 .form-edit {
-    
+    width: 750px;
+    padding: 0 15px;
+}
+
+.form-edit .form__header {
+    text-align: center;
+}
+
+.form-edit .form__body {
+    margin-top: 60px;
+}
+
+.form-edit .form__row:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.form-edit .form__row + .form__row {
+    margin-top: 40px;
+    display: block;
+}
+
+.form-edit .form__row-image {
+    width: 150px;
+    height: 150px;
+    margin-right: 40px;
+}
+
+.form-edit .form__row-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.form-edit .form__label {
+    font-size: 16px;
+}
+
+.form-edit .form__field {
+    margin-top: 10px;
+}
+
+.form-edit .form__field .field {
+    padding: 10px;
+    border: 1px solid rgb(122, 122, 122);
+    font-size: 18px;
+    outline: none;
+}
+
+.form-edit .form__actions {
+    margin-top: 100px;
+    text-align: center;
 }

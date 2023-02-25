@@ -26,6 +26,15 @@
     object-fit: cover;
 }
 
-.profile .profile__username, .profile__edit {
+.profile .profile__username, .profile .profile__edit {
     margin-top: 40px;
+}
+
+.profile .profile__nav {
+    margin-top: 180px;
+    margin-bottom: 40px;
+}
+
+.profile .profile__nav button + button {
+    margin-left: 10px;
 }

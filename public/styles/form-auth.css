@@ -21,15 +21,15 @@
     display: inline-block;
 }
 
-.form__body {
+.section-form__auth .form__body {
     margin-bottom: 30px;
 }
 
-.form__row + .form__row {
+.section-form__auth .form__row + .form__row {
     margin-top: 20px;
 }
 
-.form__field, .form__actions {
+.section-form__auth .form__field, .section-form__auth .form__actions {
     padding: 0 15px;
 }
 

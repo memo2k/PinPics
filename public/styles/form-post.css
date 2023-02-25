@@ -84,3 +84,11 @@
     top: 0;
     right: -20px;
 }
+
+.form-post .form__row {
+    margin-top: 20px;
+}
+
+.form-post .form__actions {
+    margin-top: 40px;
+}

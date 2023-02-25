@@ -3,6 +3,7 @@
 @import "hero.css";
 @import "form-auth.css";
 @import "form-post.css";
+@import "form-edit.css";
 @import "posts.css";
 @import "profile.css";
 @import "post-details.css";
@@ -92,8 +93,8 @@ h2 {
 }
 
 .btn--browse {
-    width: 120px;
-    height: 45px;
+    width: 150px;
+    height: 50px;
     font-size: 16px;
     border: none;
     background-color: #144c4c;
@@ -128,21 +129,37 @@ h2 {
     border-radius: 5px;
 }
 
-.btn--delete:hover, .btn--like:hover {
+.btn--delete:hover,
+.btn--like:hover,
+.btn--profile-content:hover {
     border: 1px solid #525252;
 }
 
-.btn--edit {
+.btn--edit, .btn--save {
     background-color: #144c4c;
     border: none;
-    padding: 15px;
+    padding: 15px 20px;
     font-size: 18px;
     border-radius: 5px;
     color: #fff;
 }
 
-.btn--edit:hover {
+.btn--edit:hover, .btn--save:hover {
     background-color: #3d6969;
+}
+
+.btn--profile-content {
+    border: 1px solid #b2b2b2;
+    background-color: transparent;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.btn--active {
+    background-color: #525252;
+    color: #fff;
 }
 
 /* ----------------------------------------------------------------- */

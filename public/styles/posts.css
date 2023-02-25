@@ -8,14 +8,18 @@
 .post {
     max-width: 500px;
     position: relative;
-    background: radial-gradient(#111 50%, #000 100%);
+    /* background: radial-gradient(#111 50%, #000 100%); */
 }
 
 .post a {
     position: relative;
 }
 
-.post .post__image img {
+.post .post__image {
+    transition: .2s;
+}
+
+.post .post__image span img {
     width: 100%;
     height: auto;
     object-fit: cover;
