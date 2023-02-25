@@ -1,5 +1,5 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
-import React, { useReducer } from 'react';
+import React from 'react';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
 
@@ -9,7 +9,7 @@ const LikePost = ({ id, likes }) => {
     const likesRef = doc(db, "posts", id);
 
     const handleLike = () => {
-        if (user && likes?.includes(user.uid)) {
+        if (likes?.includes(user.uid)) {
             updateDoc(likesRef, {
                 likes: arrayRemove(user.uid),
             });
