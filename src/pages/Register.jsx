@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import logo from '../assets/logo.png';
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -25,13 +26,13 @@ const Register = () => {
             // Updates user's display name
             await updateProfile(res.user, {
                 displayName: username,
-                photoURL: "https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png"
+                photoURL: "https://firebasestorage.googleapis.com/v0/b/pinpics-firebase.appspot.com/o/users%2Fpfp.png?alt=media&token=465c8b1f-54d7-49d8-bad7-fea2bdec733d"
             });
             
             // Stores the user details(username and email) in the database
             await setDoc(doc(db, 'users', res.user.uid), {
                 name: username,
-                profilePicture: "https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png",
+                profilePicture: "https://firebasestorage.googleapis.com/v0/b/pinpics-firebase.appspot.com/o/users%2Fpfp.png?alt=media&token=465c8b1f-54d7-49d8-bad7-fea2bdec733d",
                 email: email
             });
 
