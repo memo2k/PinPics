@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, getDoc, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -22,14 +22,13 @@ const Create = () => {
 
         try {
             const imageRef = ref(storage, `images/${image.name + v4()}`);
-            const authorImageRef = ref(storage, `users/${user.uid}/profilePicture`);
-            
+
             await uploadBytes(imageRef, image);
             await addDoc(collection(db, "posts"), {
                 title: title,
                 author: user.displayName,
                 userId: user.uid,
-                authorPicture: await getDownloadURL(authorImageRef),
+                authorPicture: user.photoURL,
                 likes: [],
                 imageUrl: await getDownloadURL(imageRef),
                 timeStamp: serverTimestamp()
