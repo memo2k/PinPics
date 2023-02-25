@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { UserAuth } from '../context/AuthContext';
 
 const Header = () => {
     const { user, logout } = UserAuth();
+    const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -13,6 +14,14 @@ const Header = () => {
             navigate('/');
         } catch (err) {
             console.log(err.message);
+        }
+    }
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (search !== "") {
+            navigate(`/?search=${search}`, { state: { search } });
+            setSearch("");
         }
     }
 
@@ -26,8 +35,8 @@ const Header = () => {
                 </div>
 
                 <div className="header__search">
-                    <form action="" className="form-search">
-                        <input type="text" placeholder="Search" className="field" />
+                    <form onSubmit={handleSearch} className="form-search">
+                        <input onChange={(e) => {setSearch(e.target.value)}} value={search} type="text" placeholder="Search" className="field" />
             
                         <button type="submit" className="btn btn--search"><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
                     </form>
