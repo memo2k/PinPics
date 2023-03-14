@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { addDoc, collection, getDoc, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { UserAuth } from '../context/AuthContext';
 import DropFileInput from './DropFileInput';
+import Footer from './Footer';
 
 const Create = () => {
     const { user } = UserAuth();
@@ -14,6 +15,7 @@ const Create = () => {
 
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState('');
+    const [validCredentials, setValidCredentials] = useState(false);
 
     const handleUpload = async (e) => {
         e.preventDefault();
@@ -21,6 +23,7 @@ const Create = () => {
         if (image == null) return;
 
         try {
+            setValidCredentials(true);
             const imageRef = ref(storage, `images/${image.name + v4()}`);
 
             await uploadBytes(imageRef, image);
@@ -57,11 +60,19 @@ const Create = () => {
 
                 <div className="form__actions">
                     <div className="form__btn">
-                        <button onClick={handleUpload} className="btn btn--upload" type="submit">Upload</button>
+                        {!validCredentials ? (
+                            <button onClick={handleUpload} className="btn btn--upload" type="submit">Upload</button>
+                        ) :(
+                            <button disabled className="btn btn--upload" type="submit" style={{ backgroundColor: "rgb(64, 64, 64)" }}>
+                                <span className="loader loader--small"></span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </form>
         </section>
+
+        <Footer />
     </>
   )
 }
