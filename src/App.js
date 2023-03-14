@@ -1,7 +1,9 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import Loading from './components/Loading';
 import EditProfile from './components/Profile/EditProfile';
 import { AuthContextProvider } from './context/AuthContext';
+import PageNotFound from './pages/PageNotFound';
 
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
@@ -21,7 +23,7 @@ const App = () => {
   return (
       <AuthContextProvider>
         <div className="wrapper">
-          <Suspense fallback={<h1>Loading...</h1>}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -30,6 +32,7 @@ const App = () => {
               <Route path="/edit-profile/:userId" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
               <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
               <Route path="/details/:postId" element={<PostDetails />} />
+              <Route path="/*" element={<PageNotFound />} />
             </Routes>
           </Suspense>
         </div>
