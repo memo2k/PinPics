@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
 import { db, storage } from '../../firebase';
+import Footer from '../Footer';
 import Header from '../Header'
 
 const EditProfile = () => {
@@ -15,6 +16,7 @@ const EditProfile = () => {
     const [image, setImage] = useState(null);
     const [photoURL, setPhotoURL] = useState(null);
     const [postList, setPostList] = useState([]);
+    const [validCredentials, setValidCredentials] = useState(false);
 
     const navigate = useNavigate();
 
@@ -62,37 +64,56 @@ const EditProfile = () => {
     // Updates the given credentials
     const handleUpdate = async (e) => {
         e.preventDefault();
-
-        const storageRef = ref(storage, `users/${userId}/profilePicture`);
-
-        if (image) {
-            await uploadBytes(storageRef, image);
-        }
-        
-        const newImage = await getDownloadURL(storageRef);
         const docRef = doc(db, "users", userId);
+        
+        if (image) {
+            setValidCredentials(true);
+            const storageRef = ref(storage, `users/${userId}/profilePicture`);
+            await uploadBytes(storageRef, image);
+            const newImage = await getDownloadURL(storageRef);
 
-        await updateDoc(docRef, { 
-            profilePicture: newImage,
-            name: name,
-            email: email
-        })
+            await updateDoc(docRef, { 
+                profilePicture: newImage,
+                name: name,
+                email: email
+            });
+    
+            await updateProfile(user, {
+                photoURL: newImage,
+                displayName: name
+            });
+    
+            postList.map(async (post) => {
+                if (post.userId == userId) {
+                    await updateDoc(doc(db, "posts", post.id), {
+                        authorPicture: newImage,
+                        author: name
+                    });
+                }
+            });
 
-        await updateProfile(user, {
-            photoURL: newImage,
-            displayName: name
-        })
+            navigate(`/profile/${userId}`);;
+        } else {
+            setValidCredentials(true);
+            await updateDoc(docRef, {
+                name: name,
+                email: email
+            });
 
-        postList.map(async (post) => {
-            if (post.userId == userId) {
-                await updateDoc(doc(db, "posts", post.id), {
-                    authorPicture: newImage,
-                    author: name
-                });
-            }
-        })
+            await updateProfile(user, {
+                displayName: name
+            });
 
-        navigate(`/profile/${userId}`);
+            postList.map(async (post) => {
+                if (post.userId == userId) {
+                    await updateDoc(doc(db, "posts", post.id), {
+                        author: name
+                    });
+                }
+            });
+
+            navigate(`/profile/${userId}`);
+        }
     }
 
   return (
@@ -142,10 +163,18 @@ const EditProfile = () => {
                 </div>
 
                 <div className="form__actions">
-                    <button onClick={handleUpdate} type='submit' className="btn btn--save">Save</button>
+                    {!validCredentials ? (
+                        <button onClick={handleUpdate} type='submit' className="btn btn--save">Save</button>
+                    ) : (
+                        <button disabled className="btn btn--save" style={{ backgroundColor: "#3d6969" }}>
+                                <span className="loader loader--smaller"></span>
+                        </button>
+                    )}
                 </div>
             </form>
         </section>
+
+        <Footer />
     </>
   )
 }
