@@ -11,7 +11,10 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
     const [error, setError] = useState('');
+    const [validCredentials, setValidCredentials] = useState(false);
 
     const { createUser } = UserAuth();
     const navigate = useNavigate();
@@ -20,8 +23,30 @@ const Register = () => {
         e.preventDefault();
         setError('');
 
+        if (!username && !email && !password) {
+            return setError("Please fill the fields below.");
+        }
+
+        if (!username) {
+            return setError("Username field cannot be empty.");
+        }
+
+        if (!email) {
+            return setError("Email field cannot be empty.");
+        }
+
+        if (password.length < 6) {
+            return setError("Password should be at least 6 characters long.");
+        }
+
+        if (password !== confirmPassword) {
+            return setError("Passwords don't match.");
+        }
+
         try {
+            setValidCredentials(true);
             const res = await createUser(email, password);
+            const storageRef = ref(storage, `users/${res.user.uid}/profilePicture`);
 
             // Updates user's display name
             await updateProfile(res.user, {
@@ -56,6 +81,10 @@ const Register = () => {
                     <div className="form__title">
                         <h2>Register</h2>
                     </div>
+
+                    <div className="form__error">
+                        {error !== "" ? <div className="error">{error}</div> : null}
+                    </div>
                 </div>
 
                 <div className="form__body">
@@ -79,14 +108,20 @@ const Register = () => {
 
                     <div className="form__row">
                         <div className="form__field">
-                            <input type="password" className="field" placeholder="Confirm password" />
+                            <input onChange={(e) => setConfirmPassword(e.target.value)} type="password" className="field" placeholder="Confirm password" />
                         </div>
                     </div>
                 </div>
 
                 <div className="form__actions">
                     <div className="form__btn">
-                        <button className="btn btn--auth">Register</button>
+                        {!validCredentials ? (
+                            <button className="btn btn--auth">Register</button>
+                        ) : (
+                            <button disabled className="btn btn--auth" style={{ backgroundColor: "rgb(64, 64, 64)" }}>
+                                <span className="loader loader--smaller"></span>
+                            </button>
+                        )}
                     </div>
 
                     <p>Already have an acccount? <Link to="/login">Login</Link></p>
