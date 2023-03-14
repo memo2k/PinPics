@@ -6,6 +6,7 @@
 /* Post */
 /* ----------------------------------------------------------------- */
 .post {
+    margin-top: 20px;
     max-width: 500px;
     position: relative;
     /* background: radial-gradient(#111 50%, #000 100%); */
@@ -25,13 +26,6 @@
     object-fit: cover;
 }
 
-/* .post__author-image img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-} */
-
 .post .post__details {
     padding: 10px;
     position: absolute;
@@ -44,11 +38,6 @@
     opacity: 0;
 }
 
-/* .post__author {
-    display: flex;
-    align-items: center;
-} */
-
 .post:hover .post__details {
     opacity: 1;
 }
@@ -56,14 +45,6 @@
 .post:hover .post__image {
     opacity: 0.7;
 }
-
-/* .post .post__author-name {
-    margin-left: 10px;
-} */
-
-/* .post .post__author-name a {
-    color: #fff;
-} */
 
 .post .post__actions {
     display: flex;

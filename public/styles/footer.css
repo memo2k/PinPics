@@ -1,0 +1,38 @@
+/* ----------------------------------------------------------------- */
+/* Footer */
+/* ----------------------------------------------------------------- */
+.footer {
+    border-top: 1px solid rgb(227, 227, 227);
+}
+
+.footer .footer__inner {
+    padding: 60px 0;
+    display: flex;
+}
+
+.footer .footer__logo {
+    margin-right: 50px;
+}
+
+.footer .footer__logo p {
+    margin-top: 10px;
+    color: rgb(119, 119, 119);
+}
+
+.footer .footer__nav ul li + li {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .footer .footer__inner {
+        display: block;
+    }
+
+    .footer .footer__logo {
+        margin-right: 0;
+    }
+
+    .footer .footer__nav {
+        margin-top: 20px;
+    }
+}

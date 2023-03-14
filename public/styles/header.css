@@ -18,7 +18,75 @@
     display: block;
 }
 
+.header__home-mobile {
+    display: none;
+}
+
 .header__search {
     width: 100%;
     padding: 0 15px;
+}
+
+/* ----------------------------------------------------------------- */
+/* Hamburger */
+/* ----------------------------------------------------------------- */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+/* ----------------------------------------------------------------- */
+/* Bar */
+/* ----------------------------------------------------------------- */
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    background-color: #3d6969;
+}
+
+@media (max-width: 768px) {
+    .header__logo {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .header__nav ul {
+        position: fixed;
+        left: -100%;
+        top: 80px;
+        flex-direction: column;
+        background-color: #fff;
+        width: 100%;
+        text-align: center;
+        transition: .3s;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .header__nav ul.active {
+        left: 0;
+    }
+
+    .header__home-mobile {
+        display: block;
+    }
 }

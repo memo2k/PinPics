@@ -21,6 +21,10 @@
     display: inline-block;
 }
 
+.section-form__auth .form__error {
+    margin-top: 20px;
+}
+
 .section-form__auth .form__body {
     margin-bottom: 30px;
 }

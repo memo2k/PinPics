@@ -19,3 +19,9 @@
 .hero__title {
     margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+    .hero {
+        display: none;
+    }
+}
