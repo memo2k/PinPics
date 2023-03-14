@@ -6,6 +6,7 @@ import Masonry from "react-masonry-css";
 import { Link, useParams } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
+import Footer from "../Footer";
 import Header from "../Header";
 import LikePost from "../LikePost";
 
@@ -35,6 +36,7 @@ const Profile = () => {
         setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         .filter(post => { return post.userId.includes(userId) }));
       }
+      
       else if (text === "liked") {
         setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         .filter(post => { return post.likes.includes(userId) }));
@@ -92,63 +94,69 @@ const Profile = () => {
               </div>
 
               <div className="profile__posts">
-                <Masonry
-                  breakpointCols={breakpoints}
-                  className="my-masonry-grid"
-                  columnClassName="my-masonry-grid_column"
-                >
-                  {postList
-                    .sort((a, b) => a.timeStamp < b.timeStamp ? 1 : -1)
-                    .map((post, id) => (
-                      <div className="post" key={id + 100}>
-                        <Link to={`/details/${post.id}`}>
-                          <div className="post__image">
-                            <LazyLoadImage src={post.imageUrl}
-                            placeholderSrc={post.imageUrl}
-                            wrapperProps={{ style: { display: 'block' } }} 
-                            effect="blur" id="image" alt='image' />
-                          </div>
-                        </Link>
+                {postList.length > 0 ? (
+                  <Masonry
+                    breakpointCols={breakpoints}
+                    className="my-masonry-grid"
+                    columnClassName="my-masonry-grid_column"
+                  >
+                    {postList
+                      .sort((a, b) => a.timeStamp < b.timeStamp ? 1 : -1)
+                      .map((post, id) => (
+                        <div className="post" key={id + 100}>
+                          <Link to={`/details/${post.id}`}>
+                            <div className="post__image">
+                              <LazyLoadImage src={post.imageUrl}
+                              placeholderSrc={post.imageUrl}
+                              wrapperProps={{ style: { display: 'block' } }} 
+                              effect="blur" id="image" alt='image' />
+                            </div>
+                          </Link>
 
-                        <div className="post__details">
-                          <div className="author">
-                            <div className="author__image">
-                              <Link to={`/profile/${post.userId}`}>
-                                <img src={post.authorPicture} alt="pfp" />
-                              </Link>
+                          <div className="post__details">
+                            <div className="author">
+                              <div className="author__image">
+                                <Link to={`/profile/${post.userId}`}>
+                                  <img src={post.authorPicture} alt="pfp" />
+                                </Link>
+                              </div>
+
+                              <div className="author__name-white">
+                                <Link to={`/profile/${post.userId}`}>
+                                  {post.author}
+                                </Link>
+                              </div>
                             </div>
 
-                            <div className="author__name-white">
-                              <Link to={`/profile/${post.userId}`}>
-                                {post.author}
-                              </Link>
+                            <div className="post__actions">
+                              {post.likes.length === 1 ? (
+                                <div className="post__actions-likes">
+                                  {post.likes.length} like
+                                </div>
+                              ) : (
+                                <div className="post__actions-likes">
+                                  {post.likes.length} likes
+                                </div>
+                              )}
+
+                              {user && (
+                                <LikePost id={post.id} likes={post.likes} />
+                              )}
                             </div>
-                          </div>
-
-                          <div className="post__actions">
-                            {post.likes.length === 1 ? (
-                              <div className="post__actions-likes">
-                                {post.likes.length} like
-                              </div>
-                            ) : (
-                              <div className="post__actions-likes">
-                                {post.likes.length} likes
-                              </div>
-                            )}
-
-                            {user && (
-                              <LikePost id={post.id} likes={post.likes} />
-                            )}
                           </div>
                         </div>
-                      </div>
-                    ))}
-                </Masonry>
+                      ))}
+                  </Masonry>
+                ) : (
+                  <div className="no-posts">There is nothing here...</div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 };
