@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
 import { UserAuth } from '../context/AuthContext';
 import Header from './Header';
+import Footer from './Footer';
 import Post from './Post';
 import { Link, useNavigate } from 'react-router-dom';
 import LikePost from './LikePost';
@@ -108,6 +109,8 @@ const PostDetails = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   )
 }
