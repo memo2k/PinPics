@@ -8,6 +8,24 @@ const Header = () => {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
+    const [hamburger, setHamburger] = useState("hamburger");
+    const [ulClass, setUlClass] = useState("");
+    const [isMenuClicked, setIsMenuClickied] = useState(false);
+    const wrapper = document.getElementById("root")
+
+    const updateMenu = () => {
+        if (!isMenuClicked) {
+            setHamburger("hamburger active");
+            setUlClass("active");
+            wrapper.classList.add("position-fixed");
+        } else {
+            setHamburger("hamburger");
+            setUlClass("");
+            wrapper.classList.remove("position-fixed");
+        }
+        setIsMenuClickied(!isMenuClicked);
+    }
+
     const handleLogout = async () => {
         try {
             await logout();
@@ -34,6 +52,10 @@ const Header = () => {
                     </Link>
                 </div>
 
+                <div className="header__home-mobile">
+                    <Link to="/">Home</Link>
+                </div>
+
                 <div className="header__search">
                     <form onSubmit={handleSearch} className="form-search">
                         <input onChange={(e) => {setSearch(e.target.value)}} value={search} type="text" placeholder="Search" className="field" />
@@ -45,7 +67,7 @@ const Header = () => {
                 <div className="header__nav">
                     <nav className="nav">
                         {!user ? (
-                        <ul>
+                        <ul className={ulClass}>
                             <li>
                                 <Link to="/login">Login</Link>
                             </li>
@@ -55,7 +77,7 @@ const Header = () => {
                             </li>
                         </ul>
                         ) : (
-                            <ul>
+                            <ul className={ulClass}>
                                 <li>
                                     <Link to={`/profile/${user.uid}`}>Profile</Link>
                                 </li>
@@ -73,6 +95,12 @@ const Header = () => {
                             </ul>
                         )}
                     </nav>
+                </div>
+
+                <div className={hamburger} onClick={updateMenu}>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
                 </div>
             </div>
         </header>
