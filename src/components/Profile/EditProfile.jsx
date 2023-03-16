@@ -1,8 +1,8 @@
-import { updateProfile } from 'firebase/auth';
+import { updateEmail, updateProfile } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
 import { db, storage } from '../../firebase';
 import Footer from '../Footer';
@@ -16,6 +16,7 @@ const EditProfile = () => {
     const [image, setImage] = useState(null);
     const [photoURL, setPhotoURL] = useState(null);
     const [postList, setPostList] = useState([]);
+    const [error, setError] = useState('');
     const [validCredentials, setValidCredentials] = useState(false);
 
     const navigate = useNavigate();
@@ -65,54 +66,76 @@ const EditProfile = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         const docRef = doc(db, "users", userId);
+
+        if (value.name.length < 3) {
+            return setError("Name should be at least 3 characters long.");
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.email)) {
+            return setError("Please enter a valid email address.");
+        }
         
         if (image) {
-            setValidCredentials(true);
-            const storageRef = ref(storage, `users/${userId}/profilePicture`);
-            await uploadBytes(storageRef, image);
-            const newImage = await getDownloadURL(storageRef);
-
-            await updateDoc(docRef, { 
-                profilePicture: newImage,
-                name: name,
-                email: email
-            });
+            try {
+                setValidCredentials(true);
+                const storageRef = ref(storage, `users/${userId}/profilePicture`);
+                await uploadBytes(storageRef, image);
+                const newImage = await getDownloadURL(storageRef);
     
-            await updateProfile(user, {
-                photoURL: newImage,
-                displayName: name
-            });
-    
-            postList.map(async (post) => {
-                if (post.userId == userId) {
-                    await updateDoc(doc(db, "posts", post.id), {
-                        authorPicture: newImage,
-                        author: name
-                    });
-                }
-            });
+                await updateDoc(docRef, { 
+                    profilePicture: newImage,
+                    name: name,
+                    email: email
+                });
+        
+                await updateProfile(user, {
+                    photoURL: newImage,
+                    displayName: name
+                });
 
-            navigate(`/profile/${userId}`);;
+                await updateEmail(user, email);
+        
+                postList.map(async (post) => {
+                    if (post.userId == userId) {
+                        await updateDoc(doc(db, "posts", post.id), {
+                            authorPicture: newImage,
+                            author: name
+                        });
+                    }
+                });
+    
+                navigate(`/profile/${userId}`);
+            } catch {
+                setValidCredentials(false);
+                return setError("Email is already in use.")
+            }
         } else {
-            setValidCredentials(true);
-            await updateDoc(docRef, {
-                name: name,
-                email: email
-            });
+            try {
+                setValidCredentials(true);
+                await updateDoc(docRef, {
+                    name: name,
+                    email: email
+                });
+    
+                await updateProfile(user, {
+                    displayName: name
+                });
 
-            await updateProfile(user, {
-                displayName: name
-            });
-
-            postList.map(async (post) => {
-                if (post.userId == userId) {
-                    await updateDoc(doc(db, "posts", post.id), {
-                        author: name
-                    });
-                }
-            });
-
-            navigate(`/profile/${userId}`);
+                await updateEmail(user, email);
+    
+                postList.map(async (post) => {
+                    if (post.userId == userId) {
+                        await updateDoc(doc(db, "posts", post.id), {
+                            author: name
+                        });
+                    }
+                });
+    
+                navigate(`/profile/${userId}`);
+            } catch {
+                setValidCredentials(false);
+                return setError("Email is already in use.");
+            }
         }
     }
 
@@ -160,16 +183,28 @@ const EditProfile = () => {
                             <input type="text" id="email" name="email" className="field" onChange={handleChange("email")} value={value.email} />
                         </div>
                     </div>
+
+                    <div className="form__row">
+                        <div className="form__row-title">
+                            <h3 className="form__title">Additional Settings</h3>
+                        </div>
+                        
+                        <Link to={`/remove-account/${userId}`}>Remove account</Link>
+                    </div>
                 </div>
 
                 <div className="form__actions">
                     {!validCredentials ? (
-                        <button onClick={handleUpdate} type='submit' className="btn btn--save">Save</button>
+                        <button onClick={handleUpdate} type='submit' className="btn btn--green">Save</button>
                     ) : (
-                        <button disabled className="btn btn--save" style={{ backgroundColor: "#3d6969" }}>
+                        <button disabled className="btn btn--green" style={{ backgroundColor: "#3d6969" }}>
                                 <span className="loader loader--smaller"></span>
                         </button>
                     )}
+
+                    <div className="form__error">
+                        {error !== "" ? <div className="error">{error}</div> : null}
+                    </div>
                 </div>
             </form>
         </section>
