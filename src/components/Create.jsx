@@ -16,11 +16,14 @@ const Create = () => {
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState('');
     const [validCredentials, setValidCredentials] = useState(false);
+    const [error, setError] = useState('');
 
     const handleUpload = async (e) => {
         e.preventDefault();
 
-        if (image == null) return;
+        if (image == null) {
+            return setError("Please select an image.")
+        }
 
         try {
             setValidCredentials(true);
@@ -55,6 +58,10 @@ const Create = () => {
                         <div className="form__field">
                             <input type="text" onChange={(e) => {setTitle(e.target.value)}} className="field" placeholder="Title" />
                         </div>
+                    </div>
+
+                    <div className="form__error">
+                        {error !== "" ? <div className="error">{error}</div> : null}
                     </div>
                 </div>
 
