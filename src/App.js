@@ -2,6 +2,8 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Loading from './components/Loading';
 import EditProfile from './components/Profile/EditProfile';
+import RemoveAccount from './components/Profile/RemoveAccount';
+import UserRoute from './components/UserRoute';
 import { AuthContextProvider } from './context/AuthContext';
 import PageNotFound from './pages/PageNotFound';
 
@@ -26,11 +28,12 @@ const App = () => {
           <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<UserRoute><Login /></UserRoute>} />
+              <Route path="/register" element={<UserRoute><Register /></UserRoute>} />
               <Route path="/profile/:userId" element={<Profile />} />
               <Route path="/edit-profile/:userId" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
               <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
+              <Route path="/remove-account/:postId" element={<ProtectedRoute><RemoveAccount /></ProtectedRoute>} />
               <Route path="/details/:postId" element={<PostDetails />} />
               <Route path="/*" element={<PageNotFound />} />
             </Routes>
