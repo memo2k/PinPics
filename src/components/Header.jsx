@@ -10,24 +10,29 @@ const Header = () => {
 
     const [hamburger, setHamburger] = useState("hamburger");
     const [ulClass, setUlClass] = useState("");
-    const [isMenuClicked, setIsMenuClickied] = useState(false);
-    const wrapper = document.getElementById("root")
+    const [isMenuClicked, setIsMenuClicked] = useState(false);
+    const root = document.getElementById("root")
 
     const updateMenu = () => {
         if (!isMenuClicked) {
             setHamburger("hamburger active");
             setUlClass("active");
-            wrapper.classList.add("position-fixed");
+            root.classList.add("position-fixed");
         } else {
             setHamburger("hamburger");
             setUlClass("");
-            wrapper.classList.remove("position-fixed");
+            root.classList.remove("position-fixed");
         }
-        setIsMenuClickied(!isMenuClicked);
+        setIsMenuClicked(!isMenuClicked);
+    }
+
+    const handleBodyPosition = () => {
+        root.classList.remove("position-fixed");
     }
 
     const handleLogout = async () => {
         try {
+            updateMenu();
             await logout();
             navigate('/');
         } catch (err) {
@@ -53,14 +58,14 @@ const Header = () => {
                 </div>
 
                 <div className="header__home-mobile">
-                    <Link to="/">Home</Link>
+                    <Link onClick={handleBodyPosition} to="/">Home</Link>
                 </div>
 
                 <div className="header__search">
                     <form onSubmit={handleSearch} className="form-search">
                         <input onChange={(e) => {setSearch(e.target.value)}} value={search} type="text" placeholder="Search" className="field" />
             
-                        <button type="submit" className="btn btn--search"><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
+                        <button onClick={handleBodyPosition} type="submit" className="btn btn--search"><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
                     </form>
                 </div>
 
@@ -69,21 +74,21 @@ const Header = () => {
                         {!user ? (
                         <ul className={ulClass}>
                             <li>
-                                <Link to="/login">Login</Link>
+                                <Link to="/login" onClick={handleBodyPosition}>Login</Link>
                             </li>
 
                             <li>
-                                <Link to="/register">Register</Link>
+                                <Link to="/register" onClick={handleBodyPosition}>Register</Link>
                             </li>
                         </ul>
                         ) : (
                             <ul className={ulClass}>
                                 <li>
-                                    <Link to={`/profile/${user.uid}`}>Profile</Link>
+                                    <Link to={`/profile/${user.uid}`} onClick={handleBodyPosition}>Profile</Link>
                                 </li>
 
                                 <li>
-                                    <Link to="/create">Upload</Link>
+                                    <Link to="/create" onClick={handleBodyPosition}>Upload</Link>
                                 </li>
 
                                 <li>
