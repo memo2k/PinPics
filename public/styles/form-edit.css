@@ -64,3 +64,17 @@
     margin-top: 100px;
     text-align: center;
 }
+
+.form-edit .form__error {
+    margin-top: 10px;
+}
+
+.form-edit .form__row a {
+    color: rgb(119, 119, 119);
+    text-decoration: underline;
+    transition: .2s;
+}
+
+.form-edit .form__row a:hover {
+    color:rgb(47, 47, 47);
+}

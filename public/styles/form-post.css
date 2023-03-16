@@ -92,3 +92,13 @@
 .form-post .form__actions {
     margin-top: 40px;
 }
+
+.form-post .form__error {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .form-post .form__field .field {
+        width: 300px;
+    }
+}

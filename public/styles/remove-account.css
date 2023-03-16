@@ -1,0 +1,21 @@
+/* ----------------------------------------------------------------- */
+/* Remove Account */
+/* ----------------------------------------------------------------- */
+.remove-account {
+    min-height: 95vh;
+}
+
+.remove-account__inner {
+    padding-top: 100px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.remove-account__actions {
+    margin-top: 60px;
+}
+
+.remove-account__cancel {
+    margin-top: 20px;
+}

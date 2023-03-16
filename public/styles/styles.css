@@ -10,6 +10,7 @@
 @import "post-details.css";
 @import "page-not-found.css";
 @import "home.css";
+@import "remove-account.css";
 
 /* ----------------------------------------------------------------- */
 /* Reset */
@@ -146,7 +147,7 @@ h2 {
     border: 1px solid #525252;
 }
 
-.btn--edit, .btn--save {
+.btn--edit, .btn--green {
     background-color: #144c4c;
     border: none;
     font-size: 18px;
@@ -154,7 +155,7 @@ h2 {
     color: #fff;
 }
 
-.btn--save {
+.btn--green {
     width: 120px;
     height: 46px;
 }
@@ -163,7 +164,7 @@ h2 {
     padding: 12px 24px;
 }
 
-.btn--edit:hover, .btn--save:hover {
+.btn--edit:hover, .btn--green:hover {
     background-color: #3d6969;
 }
 

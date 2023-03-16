@@ -4,7 +4,7 @@
 .hero {
     background-image: linear-gradient(rgba(0, 0, 0, 0.3),
     rgba(0, 0, 0, 0.3));
-    height: 500px;
+    height: 300px;
     background-size: cover;
     background-repeat: no-repeat;
     color: rgb(240, 240, 240);
@@ -13,7 +13,7 @@
 }
 
 .hero__inner {
-    padding-top: 150px;
+    padding-top: 100px;
 }
 
 .hero__title {
