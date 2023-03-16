@@ -2,12 +2,9 @@ import React from 'react';
 import Header from '../components/Header';
 import Post from '../components/Post';
 import heroImage from '../assets/hero.jpg';
-import { UserAuth } from '../context/AuthContext';
 import Footer from '../components/Footer';
 
 const Home = () => {
-    const { user } = UserAuth();
-
     return (
         <>
             <Header />
