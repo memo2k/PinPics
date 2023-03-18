@@ -5,11 +5,13 @@ import { db } from "../firebase";
 import React, { useState, useEffect } from 'react';
 import { getDocs, collection } from "firebase/firestore";
 import LikePost from './LikePost';
+import Loading from './Loading';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Post = () => {
   const [postList, setPostList] = useState([]);
+  const [hasPosts, setHasPosts] = useState(true);
   const { user } = UserAuth();
 
   const location = useLocation();
@@ -24,6 +26,10 @@ const Post = () => {
       } else {
         setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         .filter(post => { return post.title.toLowerCase().includes(search.toLowerCase()) }));
+      }
+
+      if (postList.length <= 0) {
+        setHasPosts(false);
       }
     };
 
@@ -91,7 +97,13 @@ const Post = () => {
         </Masonry>
 
       ) : (
-        <div className="no-posts">There is nothing here...</div>
+        <div>
+          {hasPosts ? (
+            <Loading />
+          ) : (
+            <div className="no-posts">There is nothing here...</div>
+          )}
+        </div>
       )}
     </>
   )

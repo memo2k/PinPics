@@ -9,6 +9,7 @@ import { db } from "../../firebase";
 import Footer from "../Footer";
 import Header from "../Header";
 import LikePost from "../LikePost";
+import Loading from "../Loading";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -16,6 +17,7 @@ const Profile = () => {
   const [postList, setPostList] = useState([]);
   const [activeBtn, setActiveBtn] = useState("created");
   const [text, setText] = useState("created");
+  const [hasPosts, setHasPosts] = useState(true);
   const { user } = UserAuth();
 
   useEffect(() => {
@@ -41,10 +43,14 @@ const Profile = () => {
         setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         .filter(post => { return post.likes.includes(userId) }));
       }
+
+      if (postList.length <= 0) {
+        setHasPosts(false);
+      }
     }
 
     getPosts();
-  }, [postList, userId]);
+  }, [postList, userId, hasPosts]);
 
   const breakpoints = {
     default: 3,
@@ -148,7 +154,13 @@ const Profile = () => {
                       ))}
                   </Masonry>
                 ) : (
-                  <div className="no-posts">There is nothing here...</div>
+                  <div>
+                    {hasPosts ? (
+                      <Loading />
+                    ) : (
+                      <div className="no-posts">There is nothing here...</div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
